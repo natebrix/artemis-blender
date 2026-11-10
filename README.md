@@ -8,6 +8,8 @@ Every mechanism moves from one set of sliders, in the same units the robot code 
 
 | File | What it is |
 | --- | --- |
+| `sim/` | **Web simulator**: drive ARTEMIS on the REBUILT field in a browser. See [`sim/README.md`](sim/README.md). |
+| `export_web.py` | Exports the lightweight robot model the simulator uses. |
 | `ARTEMIS.blend` | The scene (~44 MB, Git LFS). Open with **Blender 5.2 LTS** or newer. |
 | `build_artemis.py` | Rebuilds `ARTEMIS.blend` from `source/`: import, cleanup, rig, materials, studio, demo animation. |
 | `materials.py` | Procedural material library and the rules that map each part to a material. |
