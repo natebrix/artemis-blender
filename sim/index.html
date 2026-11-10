@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARTEMIS Simulator · Spartronics 4915</title>
+<style>
+  :root { --panel: rgba(16, 19, 24, 0.78); --line: rgba(255, 255, 255, 0.12); --text: #e9edf2; --dim: #9aa4b1;
+    --blue: #3f7cff; --yellow: #f2c200; --ok: #4cd47b; --warn: #ff9d4d; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #14161a; color: var(--text);
+    font: 14px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  canvas { display: block; }
+  .hud { position: fixed; pointer-events: none; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px;
+    backdrop-filter: blur(6px); }
+  #top { top: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 22px; align-items: center; }
+  #top .big { font-size: 30px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; }
+  #top .lbl { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); }
+  #top .cell { text-align: center; min-width: 74px; }
+  #score { color: var(--yellow); }
+  #left { left: 12px; bottom: 12px; width: 250px; }
+  #left .row { display: flex; justify-content: space-between; margin-top: 6px; font-variant-numeric: tabular-nums; }
+  #left .row:first-child { margin-top: 0; }
+  .bar { height: 6px; background: rgba(255, 255, 255, 0.1); border-radius: 3px; margin-top: 3px; overflow: hidden; }
+  .bar > div { height: 100%; width: 0; background: var(--yellow); border-radius: 3px; }
+  #rpsBar { background: var(--blue); }
+  #status { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); color: var(--dim); }
+  #status.ok { color: var(--ok); } #status.warn { color: var(--warn); }
+  #right { right: 12px; bottom: 12px; text-align: right; color: var(--dim); font-size: 12px; }
+  #right b { color: var(--text); font-weight: 600; }
+  #help { top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: auto; max-width: 92vw; max-height: 86vh; overflow: auto; }
+  #help h1 { font-size: 18px; margin: 0 0 2px; } #help p { margin: 0 0 10px; color: var(--dim); }
+  #help table { border-collapse: collapse; width: 100%; }
+  #help td { padding: 3px 10px 3px 0; white-space: nowrap; }
+  #help td.k { font-family: ui-monospace, Menlo, Consolas, monospace; color: var(--yellow); }
+  #help td.p { color: var(--dim); }
+  #banner { top: 26%; left: 50%; transform: translateX(-50%); text-align: center; font-size: 22px; padding: 18px 34px; }
+  #banner b { font-size: 44px; color: var(--yellow); } #banner small { display: block; color: var(--dim); font-size: 13px; margin-top: 6px; }
+  #loading { top: 70px; left: 50%; transform: translateX(-50%); color: var(--dim); }
+  .hidden { display: none !important; }
+  @media (max-width: 700px) { #right { display: none; } #top .big { font-size: 22px; } }
+</style>
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.min.js", "three/addons/": "./vendor/jsm/" } }
+</script>
+</head>
+<body>
+<div id="top" class="hud panel">
+  <div class="cell"><div class="lbl">Match</div><div class="big" id="clock">2:40</div></div>
+  <div class="cell"><div class="lbl">Fuel scored</div><div class="big" id="score">0</div></div>
+  <div class="cell"><div class="lbl" id="phase">Drive to start the clock</div><div><span id="speed">0.0</span> m/s</div></div>
+</div>
+<div id="left" class="hud panel">
+  <div class="row"><span>Fuel on board</span><span><span id="stored">0</span></span></div>
+  <div class="bar"><div id="storedBar"></div></div>
+  <div class="row"><span>Flywheel</span><span><span id="rps">0</span> rev/s</span></div>
+  <div class="bar"><div id="rpsBar"></div></div>
+  <div id="status">idle</div>
+</div>
+<div id="right" class="hud panel">
+  Camera: <b id="cam">Driver station</b> (C)<br>
+  <span id="pad">Keyboard</span><br>
+  H for controls
+</div>
+<div id="help" class="hud panel">
+  <h1>ARTEMIS simulator</h1>
+  <p>Spartronics 4915 · REBUILT 2026. Collect fuel, then shoot it into the blue hub from your side of the field.</p>
+  <table id="keys"></table>
+</div>
+<div id="banner" class="hud panel hidden"><span id="bannerText"></span><small>Press Enter to play again</small></div>
+<div id="loading" class="hud">Loading robot…</div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
